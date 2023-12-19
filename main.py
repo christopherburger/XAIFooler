@@ -16,7 +16,7 @@ scipy.stats.itemfreq=monkeypath_itemfreq
 import textattack
 import transformers
 
-from utils import RANDOM_BASELINE, ADV_XAI_RBO
+from utils import RANDOM_BASELINE_Attack, ADV_XAI_Attack
 from timeit import default_timer as timer
 
 import gc
@@ -144,7 +144,10 @@ if __name__ == "__main__":
 									modification_rate=args.modify_rate,
 									rbo_p = args.rbo_p,
 									similarity_measure=args.similarity_measure,
-									greedy_search=greedy_search
+									greedy_search=greedy_search,
+									search_method = args.method,
+									crossover = args.crossover,
+									parent_selection = args.parent_selection
 									)
 
 		attack_args = textattack.AttackArgs(num_examples=1,
@@ -160,17 +163,20 @@ if __name__ == "__main__":
 		return attacker
 
 	if args.method == "xaifooler":
-		attacker = generate_attacker(ADV_XAI_RBO, args, custom_seed=None)
+		attacker = generate_attacker(ADV_XAI_Attack, args, custom_seed=None)
 
 	elif args.method == "inherent":
-		attacker1 = generate_attacker(ADV_XAI_RBO, args, custom_seed=np.random.choice(1000))
-		attacker2 = generate_attacker(ADV_XAI_RBO, args, custom_seed=np.random.choice(1000))
+		attacker1 = generate_attacker(ADV_XAI_Attack, args, custom_seed=np.random.choice(1000))
+		attacker2 = generate_attacker(ADV_XAI_Attack, args, custom_seed=np.random.choice(1000))
 
 	elif args.method == "random":
-		attacker = generate_attacker(RANDOM_BASELINE, args, custom_seed=None, greedy_search=True)
+		attacker = generate_attacker(RANDOM_BASELINE_Attack, args, custom_seed=None, greedy_search=True)
 
 	elif args.method == "truerandom":
-		attacker = generate_attacker(RANDOM_BASELINE, args, custom_seed=None, greedy_search=False)
+		attacker = generate_attacker(RANDOM_BASELINE_Attack, args, custom_seed=None, greedy_search=False)
+
+	elif args.method == 'GA':
+		attacker = generate_attacker(ADV_XAI_Attack, args, custom_seed=None)
 
 	results = []
 

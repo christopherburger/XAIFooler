@@ -101,13 +101,15 @@ def load_args():
     parser.add_argument('--seed', type=int, default=12)
     parser.add_argument('--seed-dataset', type=int, default=12)
     parser.add_argument('--method', type=str, default="xaifooler")
+    #parser.add_argument('--search-method',type=str,default = 'default')
+    parser.add_argument('--crossover', type=str, default = 'uniform')
+    parser.add_argument('--parent-selection', type=str, default = 'roulette')
     parser.add_argument('--debug', action='store_true', default=False)
     parser.add_argument('--rerun', action='store_true', default=False)
-    parser.add_argument('--similarity-measure', type=str, default='rbo') 
+    parser.add_argument('--similarity-measure', type=str, default='rbo')
     #options are rbo, l2, com (general definiton), com_rank_weighted (closest to paper), com_proportional (incomplete)
     #New Similarity Measures are: jaccard, kendall, spearman, append _weighted to each for the weighted version
 
-    #Only values that need to be altered for different runs are, similarity-measure, success-threshold, and if using rbo, rbo-p
     
     args = parser.parse_args()
     return args
