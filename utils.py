@@ -100,7 +100,7 @@ class ADV_XAI_Attack(AttackRecipe):
 			  greedy_search=None, #placeholder,
 			  search_method = 'xaifooler',
 			  crossover = 'uniform',
-              parent_selection = 'roulette'
+			  parent_selection = 'roulette'
 	):
 		#
 		# Swap words with their 10 closest embedding nearest-neighbors.
@@ -174,8 +174,17 @@ class ADV_XAI_Attack(AttackRecipe):
 											featureSelector = featureSelector,
 											limeSamples = limeSamples,
 											random_seed = random_seed,
-										    model_batch_size=model_batch_size
+											model_batch_size=model_batch_size
 											)
+		
+		
+		t1 = search_method = GreedyWordSwapWIR_XAI(wir_method="delete", 
+												initialIndexGF=indexGoalFunction,
+												reverseIndices=reverse_search_indices)
+		t2 = search_method = GA(crossover_type = crossover, parent_selection = parent_selection)
+		
+		#print(type(t1),type(t2))
+		
 		if search_method == 'xaifooler':
 
 			search_method = GreedyWordSwapWIR_XAI(wir_method="delete", 
@@ -211,7 +220,7 @@ class RANDOM_BASELINE_Attack(AttackRecipe):
 			  greedy_search=False,
 			  search_method = 'xaifooler',
 			  crossover = 'uniform',
-              parent_selection = 'roulette'
+			  parent_selection = 'roulette'
 			 ):
 		#
 		# Swap words with their 10 closest embedding nearest-neighbors.
@@ -284,7 +293,7 @@ class RANDOM_BASELINE_Attack(AttackRecipe):
 											featureSelector = featureSelector,
 											limeSamples = limeSamples,
 											random_seed = random_seed,
-										    model_batch_size=model_batch_size
+											model_batch_size=model_batch_size
 											)
 		search_method = GreedyWordSwapWIR_RANDOM(wir_method="random", 
 												initialIndexGF=indexGoalFunction,
